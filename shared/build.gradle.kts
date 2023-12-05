@@ -2,7 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("org.jetbrains.compose")
-    id("com.squareup.sqldelight")
+    id("app.cash.sqldelight") version "2.0.1"
 }
 
 kotlin {
@@ -42,7 +42,7 @@ kotlin {
                 implementation(compose.components.resources)
 
                 implementation("com.squareup.sqldelight:runtime:1.5.5")
-                implementation("com.squareup.sqldelight:coroutines-extensions:1.5.5")
+                implementation("app.cash.sqldelight:coroutines-extensions:2.0.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 implementation("dev.icerock.moko:mvvm-core:0.16.1")
                 implementation("dev.icerock.moko:mvvm-compose:0.16.1")
@@ -57,7 +57,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:android-driver:1.5.5")
+                implementation("app.cash.sqldelight:android-driver:2.0.1")
                 implementation("androidx.appcompat:appcompat:1.6.1")
                 implementation("androidx.activity:activity-compose:1.7.2")
             }
@@ -99,10 +99,18 @@ android {
     }
 }
 
+//sqldelight {
+//    database("ContactDatabase") {
+//        packageName = ""
+//        sourceFolders = listOf("sqldelight")
+//    }
+//}
+
 sqldelight {
-    database("ContactDatabase") {
-        packageName = "com.plcoding.contactscomposemultiplatform.database"
-        sourceFolders = listOf("sqldelight")
+    databases {
+        create("ContactDatabase") {
+            packageName.set("com.plcoding.contactscomposemultiplatform.database")
+        }
     }
 }
 
